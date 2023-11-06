@@ -145,8 +145,8 @@ public class KafkaModule {
         } else {
             return new KafkaConsumer<>(
                     props,
-                    new ByteArrayDeserializer(),
-                    new ByteArrayDeserializer()
+                    props.containsKey("key.deserializer") ? null: new ByteArrayDeserializer(),
+                    props.containsKey("value.deserializer") ? null: new ByteArrayDeserializer()
                     );
         }
     }
@@ -167,8 +167,8 @@ public class KafkaModule {
             } else {
                 this.producers.put(clusterId, new KafkaProducer<>(
                     props,
-                    new ByteArraySerializer(),
-                    new ByteArraySerializer()
+                    props.containsKey("key.serializer") ? null: new ByteArraySerializer(),
+                    props.containsKey("value.serializer") ? null: new ByteArraySerializer()
                 ));
             }
         }
